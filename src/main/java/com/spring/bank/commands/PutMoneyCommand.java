@@ -1,21 +1,21 @@
 package com.spring.bank.commands;
 
 import com.spring.bank.commands.impl.Command;
-import com.spring.bank.model.ATM;
-import com.spring.bank.model.Card;
+import com.spring.bank.service.CardService;
 
 public class PutMoneyCommand implements Command {
-    private ATM atm;
-    private Card card;
-    private double amount;
+    private final CardService cardService;
+    private final String cardNumber;
+    private final double amount;
 
-    public PutMoneyCommand(ATM atm, Card card, double amount) {
-        this.atm = atm;
-        this.card = card;
+    public PutMoneyCommand(CardService cardService, String cardNumber, double amount) {
+        this.cardService = cardService;
+        this.cardNumber = cardNumber;
         this.amount = amount;
     }
+
     @Override
     public void execute() {
-        atm.putMoney(card, amount);
+        cardService.deposit(cardNumber, amount);
     }
 }

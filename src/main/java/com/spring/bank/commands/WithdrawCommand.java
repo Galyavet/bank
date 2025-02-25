@@ -1,21 +1,21 @@
 package com.spring.bank.commands;
 
 import com.spring.bank.commands.impl.Command;
-import com.spring.bank.model.ATM;
-import com.spring.bank.model.Card;
+import com.spring.bank.service.CardService;
 
 public class WithdrawCommand implements Command {
-    private ATM theATM;
-    private Card card;
-    private double amount;
+    private final CardService cardService;
+    private final String cardNumber;
+    private final double amount;
 
-    public WithdrawCommand(ATM theAtm, Card card, double amount) {
-        this.theATM = theAtm;
-        this.card = card;
+    public WithdrawCommand(CardService cardService, String cardNumber, double amount) {
+        this.cardService = cardService;
+        this.cardNumber = cardNumber;
         this.amount = amount;
     }
+
     @Override
     public void execute() {
-        theATM.withdrawMoney(card, amount);
+        cardService.withdraw(cardNumber, amount);
     }
 }

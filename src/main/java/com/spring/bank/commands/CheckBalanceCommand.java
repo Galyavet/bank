@@ -1,20 +1,24 @@
 package com.spring.bank.commands;
 
 import com.spring.bank.commands.impl.Command;
-import com.spring.bank.model.ATM;
-import com.spring.bank.model.Card;
+import com.spring.bank.service.CardService;
 
 public class CheckBalanceCommand implements Command {
-    private ATM theATM;
-    private Card card;
+    private final CardService cardService;
+    private final String cardNumber;
 
-    public CheckBalanceCommand(ATM theATM, Card card) {
-        this.theATM = theATM;
-        this.card = card;
+    public CheckBalanceCommand(CardService cardService, String cardNumber) {
+        this.cardService = cardService;
+        this.cardNumber = cardNumber;
     }
 
     @Override
     public void execute() {
-        theATM.checkBalance(card);
+        cardService.checkBalance(cardNumber);
+        if (cardService!= null) {
+            System.out.println("Баланс: " + cardService.checkBalance(cardNumber));
+        } else {
+            System.out.println("Карта не найдена!");
+        }
     }
 }
