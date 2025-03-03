@@ -1,43 +1,34 @@
 package com.spring.bank.model;
 
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Card implements Serializable {
-    private static final long serialVersionUID = 1L;
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class Card extends CommonModel {
 
-    private String number;
-    private int pin;
-    private double balance;
+    private String cardNumber;
+    private Integer pinCode;
+    private Double balance;
 
-    public Card(String number, int pin, double balance) {
-        this.pin = pin;
-        this.balance = balance;
-        this.number = number;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
+    public Card(Long id, String cardNumber, Integer pinCode, Double balance) {
+        this.setId(id);
+        this.cardNumber = cardNumber;
+        this.pinCode = pinCode;
         this.balance = balance;
     }
 
-    public int getPin() {
-        return pin;
-    }
-
-    public String getCardNumber() {
-        return number;
-    }
-
-    @Override
-    public String toString() {
+    public String reformatCardNumber() {
         List<String> list = new ArrayList<String>();
-        for (int i = 0; i < 16; i+=4) {
-            list.add(number.substring(i, i + 4));
+        for (int i = 0; i < 16; i += 4) {
+            list.add(cardNumber.substring(i, i + 4));
         }
         return String.join("-", list);
     }

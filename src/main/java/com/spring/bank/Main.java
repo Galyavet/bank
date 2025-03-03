@@ -1,17 +1,16 @@
 package com.spring.bank;
 
-import com.spring.bank.repository.FileStorage;
-import com.spring.bank.repository.H2Storage;
-import com.spring.bank.service.CardService;
-import com.spring.bank.view.ATMView;
+import com.spring.bank.config.AppConfig;
+import com.spring.bank.controller.BankController;
+
+import java.io.IOException;
+
 
 public class Main {
-    public static void main(String[] args) {
-        FileStorage fileStorage = new FileStorage();
-        
-        CardService cardService = new CardService(fileStorage);
-
-        ATMView atmView = new ATMView(cardService);
-        atmView.start();
+    public static void main(String[] args) throws IOException {
+        AppConfig.init();
+        BankController bankController = AppConfig.getBankController();
+        bankController.start();
     }
+
 }
