@@ -1,6 +1,6 @@
-package com.spring.bank.model;
+package com.bank.model;
 
-import com.spring.bank.commands.Operation;
+import com.bank.commands.Operation;
 
 import java.util.Scanner;
 
@@ -13,31 +13,18 @@ public class ConsoleReader {
 
     public Operation getOperation() {
         System.out.println("Выберите операцию:");
-        System.out.println("1. INFO");
-        System.out.println("2. GET_MONEY");
-        System.out.println("3. PUT_MONEY");
-        System.out.println("4. CREATE_CARD");
-        System.out.println("5. DELETE_CARD");
-        System.out.println("6. EXIT");
+        for (Operation operation : Operation.values()) {
+            System.out.println((operation.ordinal() + 1) + ". " + operation.getDescription());
+        }
+
         int choice = scanner.nextInt();
         scanner.nextLine();
 
-        switch (choice) {
-            case 1:
-                return Operation.INFO;
-            case 2:
-                return Operation.GET_MONEY;
-            case 3:
-                return Operation.PUT_MONEY;
-            case 4:
-                return Operation.CREATE_CARD;
-            case 5:
-                return Operation.DELETE_CARD;
-            case 6:
-                return Operation.EXIT;
-            default:
-                throw new IllegalArgumentException("Неверный выбор операции.");
+        if (choice < 1 || choice > Operation.values().length) {
+            throw new IllegalArgumentException("Неверный выбор операции.");
         }
+
+        return Operation.values()[choice - 1];
     }
 
     public Long readCardId() {

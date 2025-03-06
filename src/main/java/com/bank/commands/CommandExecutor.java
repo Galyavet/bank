@@ -1,18 +1,18 @@
-package com.spring.bank.commands;
+package com.bank.commands;
 
-import com.spring.bank.commands.impl.CreateCardCommand;
-import com.spring.bank.commands.impl.DeleteCardCommand;
-import com.spring.bank.commands.impl.ExitCommand;
-import com.spring.bank.commands.impl.GetMoneyCommand;
-import com.spring.bank.commands.impl.InfoCommand;
-import com.spring.bank.commands.impl.PutMoneyCommand;
-import com.spring.bank.service.CardService;
+import com.bank.commands.impl.CreateCardCommand;
+import com.bank.commands.impl.DeleteCardCommand;
+import com.bank.commands.impl.ExitCommand;
+import com.bank.commands.impl.GetMoneyCommand;
+import com.bank.commands.impl.InfoCommand;
+import com.bank.commands.impl.PutMoneyCommand;
+import com.bank.service.CardService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandExecutor {
-    private final Map<Operation, Command> allCommands;
+    private final Map<Operation, Command<?>> allCommands;
 
     public CommandExecutor(CardService cardService) {
         allCommands = new HashMap<>();
@@ -24,10 +24,10 @@ public class CommandExecutor {
         allCommands.put(Operation.DELETE_CARD, new DeleteCardCommand(cardService));
     }
 
-    public void executeOperation(Operation operation, Object... args) {
-        Command command = allCommands.get(operation);
+    public <T> void executeOperation(Operation operation, T dto) {
+        Command<T> command = (Command<T>) allCommands.get(operation);
         if (command != null) {
-            command.execute(args);
+            command.execute(dto);
         } else {
             throw new IllegalArgumentException("Неизвестная операция");
         }

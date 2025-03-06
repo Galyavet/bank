@@ -1,9 +1,10 @@
-package com.spring.bank.commands.impl;
+package com.bank.commands.impl;
 
-import com.spring.bank.commands.Command;
-import com.spring.bank.service.CardService;
+import com.bank.commands.Command;
+import com.bank.dto.InfoCardDTO;
+import com.bank.service.CardService;
 
-public class InfoCommand implements Command {
+public class InfoCommand implements Command<InfoCardDTO> {
     private final CardService cardService;
 
     public InfoCommand(CardService cardService) {
@@ -11,9 +12,8 @@ public class InfoCommand implements Command {
     }
 
     @Override
-    public void execute(Object... args) {
-        Long cardId = (Long) args[0];
-        cardService.getCard(cardId).ifPresentOrElse(
+    public void execute(InfoCardDTO dto) {
+        cardService.getCard(dto.getCardId()).ifPresentOrElse(
                 card -> System.out.println("Информация о карте: " + card),
                 () -> System.out.println("Карта не найдена")
         );

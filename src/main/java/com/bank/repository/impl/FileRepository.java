@@ -1,7 +1,7 @@
-package com.spring.bank.repository.impl;
+package com.bank.repository.impl;
 
-import com.spring.bank.model.Card;
-import com.spring.bank.repository.CardRepository;
+import com.bank.model.Card;
+import com.bank.repository.CardRepository;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.spring.bank.config.AppConfig.FILE_PATH;
+import static com.bank.config.AppConfig.FILE_PATH;
 
 public class FileRepository implements CardRepository {
     private final Map<Long, Card> cards = new HashMap<>();

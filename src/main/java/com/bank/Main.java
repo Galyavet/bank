@@ -1,7 +1,7 @@
-package com.spring.bank;
+package com.bank;
 
-import com.spring.bank.config.AppConfig;
-import com.spring.bank.controller.BankController;
+import com.bank.config.AppConfig;
+import com.bank.controller.BankController;
 
 import java.io.IOException;
 

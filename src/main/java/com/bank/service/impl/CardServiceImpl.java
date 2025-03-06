@@ -1,8 +1,8 @@
-package com.spring.bank.service.impl;
+package com.bank.service.impl;
 
-import com.spring.bank.model.Card;
-import com.spring.bank.repository.CardRepository;
-import com.spring.bank.service.CardService;
+import com.bank.model.Card;
+import com.bank.repository.CardRepository;
+import com.bank.service.CardService;
 
 import java.util.Optional;
 

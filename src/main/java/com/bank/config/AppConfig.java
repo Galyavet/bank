@@ -1,12 +1,12 @@
-package com.spring.bank.config;
+package com.bank.config;
 
-import com.spring.bank.commands.CommandExecutor;
-import com.spring.bank.controller.BankController;
-import com.spring.bank.model.ConsoleReader;
-import com.spring.bank.repository.CardRepository;
-import com.spring.bank.repository.impl.FileRepository;
-import com.spring.bank.service.CardService;
-import com.spring.bank.service.impl.CardServiceImpl;
+import com.bank.commands.CommandExecutor;
+import com.bank.controller.BankController;
+import com.bank.model.ConsoleReader;
+import com.bank.repository.CardRepository;
+import com.bank.repository.impl.FileRepository;
+import com.bank.service.CardService;
+import com.bank.service.impl.CardServiceImpl;
 import lombok.Getter;
 
 import java.io.IOException;

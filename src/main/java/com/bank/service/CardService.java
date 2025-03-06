@@ -1,6 +1,6 @@
-package com.spring.bank.service;
+package com.bank.service;
 
-import com.spring.bank.model.Card;
+import com.bank.model.Card;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package com.spring.bank.repository;
+package com.bank.repository;
 
-import com.spring.bank.model.Card;
+import com.bank.model.Card;
 
 import java.util.Map;
 import java.util.Optional;

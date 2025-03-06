@@ -1,4 +1,4 @@
-package com.spring.bank.model;
+package com.bank.model;
 
 import lombok.Data;
 
