@@ -2,28 +2,23 @@ package com.bank.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Card extends CommonModel {
+public class Card {
+
+    private Long id;
 
     private String cardNumber;
-    private Integer pinCode;
-    private Double balance;
 
-    public Card(Long id, String cardNumber, Integer pinCode, Double balance) {
-        this.setId(id);
-        this.cardNumber = cardNumber;
-        this.pinCode = pinCode;
-        this.balance = balance;
-    }
+    private Integer pinCode;
+
+    private Double balance;
 
     public String reformatCardNumber() {
         List<String> list = new ArrayList<String>();

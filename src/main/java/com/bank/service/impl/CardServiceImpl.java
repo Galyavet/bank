@@ -7,6 +7,7 @@ import com.bank.service.CardService;
 import java.util.Optional;
 
 public class CardServiceImpl implements CardService {
+
     private final CardRepository repository;
 
     public CardServiceImpl(CardRepository repository) {
@@ -27,41 +28,29 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public void deleteCard(Long id) {
-        if (!repository.findById(id).isPresent()) {
-            throw new IllegalArgumentException("Карта не найдена");
-        }
         repository.deleteById(id);
+        System.out.println("Карта успешно удалена.");
     }
 
     @Override
     public void putMoney(Long cardId, double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Сумма для пополнения должна быть положительной");
-        }
-
         Card card = repository.findById(cardId)
                 .orElseThrow(() -> new IllegalArgumentException("Карта не найдена"));
-
         card.setBalance(card.getBalance() + amount);
         repository.save(card);
+        System.out.println("Баланс успешно пополнен.");
+
     }
 
     @Override
     public void getMoney(Long cardId, double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Сумма для снятия должна быть положительной");
-        }
-
         Card card = repository.findById(cardId)
                 .orElseThrow(() -> new IllegalArgumentException("Карта не найдена"));
-
-        if (card.getBalance() < amount) {
-            throw new IllegalArgumentException("Недостаточно средств на балансе");
-        }
-
         card.setBalance(card.getBalance() - amount);
         repository.save(card);
+        System.out.println("Средства успешно сняты.");
     }
+
     private Long generateNewId() {
         return repository.getAllCards().keySet().stream()
                 .max(Long::compareTo)

@@ -1,10 +1,12 @@
 package com.bank.commands.impl;
 
 import com.bank.commands.Command;
-import com.bank.dto.PutMoneyDTO;
+import com.bank.dto.CardDTO;
 import com.bank.service.CardService;
+import com.bank.service.impl.ConsoleReader;
 
-public class PutMoneyCommand implements Command<PutMoneyDTO> {
+
+public class PutMoneyCommand implements Command {
     private final CardService cardService;
 
     public PutMoneyCommand(CardService cardService) {
@@ -12,8 +14,9 @@ public class PutMoneyCommand implements Command<PutMoneyDTO> {
     }
 
     @Override
-    public void execute(PutMoneyDTO dto) {
-        cardService.putMoney(dto.getCardId(), dto.getAmount());
+    public void execute() {
+        CardDTO dto = ConsoleReader.readValueFromCardBalance();
+        cardService.putMoney(dto.getCardId(), dto.getBalance());
         System.out.println("Операция выполнена успешно.");
     }
 }

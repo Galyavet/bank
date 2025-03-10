@@ -1,7 +1,7 @@
 package com.bank;
 
 import com.bank.config.AppConfig;
-import com.bank.controller.BankController;
+import com.bank.controller.ConsoleController;
 
 import java.io.IOException;
 
@@ -9,8 +9,8 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         AppConfig.init();
-        BankController bankController = AppConfig.getBankController();
-        bankController.start();
+        ConsoleController consoleController = AppConfig.getConsoleController();
+        consoleController.start();
     }
 
 }
