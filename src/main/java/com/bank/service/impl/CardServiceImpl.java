@@ -22,34 +22,52 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Optional<Card> getCard(Long id) {
-        return repository.findById(id);
+    public Optional<Card> getCard(String cardNumber) {
+        return repository.findByCardNumber(cardNumber);
     }
 
     @Override
-    public void deleteCard(Long id) {
-        repository.deleteById(id);
-        System.out.println("Карта успешно удалена.");
+    public void deleteCard(String cardNumber) {
+        Optional<Card> cardOptional = repository.findByCardNumber(cardNumber);
+        if (cardOptional.isPresent()) {
+            repository.deleteByCardNumber(cardNumber);
+            System.out.println("Карта успешно удалена.");
+        } else {
+            System.out.println("Ошибка: Карта с номером " + cardNumber + " не найдена.");
+        }
     }
 
     @Override
-    public void putMoney(Long cardId, double amount) {
-        Card card = repository.findById(cardId)
-                .orElseThrow(() -> new IllegalArgumentException("Карта не найдена"));
-        card.setBalance(card.getBalance() + amount);
-        repository.save(card);
-        System.out.println("Баланс успешно пополнен.");
+    public void putMoney(String cardNumber, double amount) {
+        Optional<Card> cardOptional = repository.findByCardNumber(cardNumber);
+        if (cardOptional.isPresent()) {
+            Card card = cardOptional.get();
+            card.setBalance(card.getBalance() + amount);
+            repository.save(card);
+            System.out.println("Баланс успешно пополнен.");
+        } else {
+            System.out.println("Карта с номером " + cardNumber + " не найдена.");
+        }
 
     }
 
     @Override
-    public void getMoney(Long cardId, double amount) {
-        Card card = repository.findById(cardId)
-                .orElseThrow(() -> new IllegalArgumentException("Карта не найдена"));
-        card.setBalance(card.getBalance() - amount);
-        repository.save(card);
-        System.out.println("Средства успешно сняты.");
+    public void getMoney(String cardNumber, double amount) {
+        Optional<Card> cardOptional = repository.findByCardNumber(cardNumber);
+        if (cardOptional.isPresent()) {
+            Card card = cardOptional.get();
+            if (card.getBalance() >= amount) {
+                card.setBalance(card.getBalance() - amount);
+                repository.save(card);
+                System.out.println("Средства успешно сняты.");
+            } else {
+                System.out.println("Ошибка: Недостаточно средств на карте.");
+            }
+        } else {
+            System.out.println("Ошибка: Карта с номером " + cardNumber + " не найдена.");
+        }
     }
+
 
     private Long generateNewId() {
         return repository.getAllCards().keySet().stream()

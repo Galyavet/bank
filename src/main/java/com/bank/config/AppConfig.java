@@ -1,5 +1,6 @@
 package com.bank.config;
 
+import com.bank.model.Card;
 import com.bank.service.impl.CommandExecutor;
 import com.bank.controller.ConsoleController;
 import com.bank.service.impl.ConsoleReader;
@@ -13,7 +14,7 @@ import java.util.Properties;
 
 public class AppConfig {
 
-    public static Long cardId = 0L;
+    public static Card currentCard = null;
 
     public static String filepath;
 

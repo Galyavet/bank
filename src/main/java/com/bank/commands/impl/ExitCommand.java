@@ -1,7 +1,6 @@
 package com.bank.commands.impl;
 
 import com.bank.commands.Command;
-import com.bank.service.CardService;
 
 public class ExitCommand implements Command {
 

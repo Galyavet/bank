@@ -1,6 +1,7 @@
 package com.bank.service.impl;
 
 import com.bank.commands.Operation;
+import com.bank.config.AppConfig;
 import com.bank.dto.CardDTO;
 
 import java.util.Scanner;
@@ -9,6 +10,7 @@ public class ConsoleReader {
     private static final Scanner scanner = new Scanner(System.in);
 
     public ConsoleReader() {
+
     }
 
     public int readInput() {
@@ -16,8 +18,9 @@ public class ConsoleReader {
 
         while (true) {
             try {
-                System.out.print("Введите номер: ");
+                System.out.print("\nВведите номер: ");
                 commandIndex = Integer.parseInt(scanner.nextLine());
+                System.out.println();
 
                 if (commandIndex >= 1 && commandIndex <= Operation.values().length) {
                     return commandIndex;
@@ -31,41 +34,28 @@ public class ConsoleReader {
     }
 
     public static CardDTO readValueFromCreateNewCard() {
-        return new CardDTO(readCardId(), readCardNumber(), readPinCode(), readBalance());
+        return new CardDTO( readCardNumber(), readPinCode(), readBalance());
     }
 
-    public static CardDTO readValueFromCardId() {
+    public static CardDTO readValueFromCardNumber() {
         CardDTO cardDto = new CardDTO();
-        cardDto.setCardId(readCardId());
+        cardDto.setCardNumber(readCardNumber());
         return cardDto;
     }
     public static CardDTO readValueFromCardBalance(){
-        CardDTO cardDto = new CardDTO();
-        cardDto.setCardId(readCardId());
+        CardDTO cardDto = readValueFromCardNumber();
         cardDto.setBalance(readBalance());
         return cardDto;
-    }
-
-    public static Long readCardId() {
-        while (true) {
-            try {
-                System.out.println("Введите id: ");
-                String input = scanner.nextLine();
-                return Long.parseLong(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Введите корректное число для id.");
-            }
-        }
     }
 
     public static String readCardNumber() {
         while (true) {
             System.out.println("Введите номер карты: ");
             String cardNumber = scanner.nextLine();
-            if (cardNumber.matches("\\d{16}")) {
+            if (cardNumber.matches("\\d{5}")) {
                 return cardNumber;
             } else {
-                System.out.println("Номер карты должен состоять из 16 цифр.");
+                System.out.println("Номер карты должен состоять из 5 цифр.");
             }
         }
 
@@ -103,5 +93,21 @@ public class ConsoleReader {
                 System.out.println("Введите корректное число для баланса.");
             }
         }
+    }
+    public static boolean verifyPinCode(){
+        for (int i = 0; i < 3; i++) {
+            try {
+                System.out.println("Введите пин-код: ");
+                String input = scanner.nextLine();
+                if(Integer.parseInt(input) == AppConfig.currentCard.getPinCode()){
+                    return true;
+                }
+                System.out.println("Осталось попыток: " + (2 - i));
+            } catch (NumberFormatException e) {
+                System.out.println("Введите корректное число для пин-кода.");
+            }
+
+        }
+        return false;
     }
 }

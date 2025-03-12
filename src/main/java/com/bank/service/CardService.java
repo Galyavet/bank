@@ -18,25 +18,26 @@ public interface CardService {
      * @param id - need to find same card
      * @return optional card
      */
-    Optional<Card> getCard(Long id);
+    Optional<Card> getCard(String id);
 
     /**
      * Delete card by id
      * @param id - identity of the card
      */
-    void deleteCard(Long id);
+    void deleteCard(String id);
 
     /**
      * Put money on the card
-     * @param cardId - identity of the card
+     * @param cardNumber - identity of the card
      * @param amount - how much money have to put on the card
      */
-    void putMoney(Long cardId, double amount);
+    void putMoney(String cardNumber, double amount);
 
     /**
      * Get money from the card
-     * @param cardId - identity of the card
+     * @param cardNumber - identity of the card
      * @param amount - how much monet have to get from the card
      */
-    void getMoney(Long cardId, double amount);
+    void getMoney(String cardNumber, double amount);
+
 }

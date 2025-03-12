@@ -1,5 +1,6 @@
 package com.bank.repository.impl;
 
+import com.bank.config.AppConfig;
 import com.bank.model.Card;
 import com.bank.repository.CardRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -15,11 +16,13 @@ import static com.bank.config.AppConfig.filepath;
 
 public class FileRepository implements CardRepository {
 
-    private final Map<Long, Card> cards = new HashMap<>();
+    private final Map<Long, Card> cards;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     public FileRepository() {
+        cards = new HashMap<>();
+        objectMapper = new ObjectMapper();
         loadCards();
     }
 
@@ -30,19 +33,25 @@ public class FileRepository implements CardRepository {
     }
 
     @Override
-    public Optional<Card> findById(Long id) {
-        return Optional.ofNullable(cards.get(id));
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        cards.remove(id);
+    public void deleteByCardNumber(String cardNumber) {
+        Optional<Long> cardIdOptional = cards.entrySet().stream()
+                .filter(entry -> entry.getValue().getCardNumber().equals(cardNumber))
+                .map(Map.Entry::getKey)
+                .findFirst();
+        cards.remove(cardIdOptional.get());
         saveCards();
     }
 
     @Override
     public Map<Long, Card> getAllCards() {
         return new HashMap<>(cards);
+    }
+
+    @Override
+    public Optional<Card> findByCardNumber(String cardNumber) {
+        return cards.values().stream()
+                .filter(card -> card.getCardNumber().equals(cardNumber))
+                .findFirst();
     }
 
     private void saveCards() {

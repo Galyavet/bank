@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CardDTO {
 
-    private Long cardId;
-
     private String cardNumber;
 
     private int pinCode;

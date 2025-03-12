@@ -9,7 +9,10 @@ public enum Operation {
     PUT_MONEY("Пополнить баланс"),
     CREATE_CARD("Создать карту"),
     DELETE_CARD("Удалить карту"),
+    INPUT_CARD("Вставить карту"),
+    EJECT_CARD("Изъять карту"),
     EXIT("Выйти из системы");
+
 
     private final String description;
 

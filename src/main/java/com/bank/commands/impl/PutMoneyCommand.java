@@ -1,6 +1,7 @@
 package com.bank.commands.impl;
 
 import com.bank.commands.Command;
+import com.bank.config.AppConfig;
 import com.bank.dto.CardDTO;
 import com.bank.service.CardService;
 import com.bank.service.impl.ConsoleReader;
@@ -15,8 +16,14 @@ public class PutMoneyCommand implements Command {
 
     @Override
     public void execute() {
-        CardDTO dto = ConsoleReader.readValueFromCardBalance();
-        cardService.putMoney(dto.getCardId(), dto.getBalance());
-        System.out.println("Операция выполнена успешно.");
+        if (AppConfig.currentCard == null) {
+            System.out.println("Вставьте карту!\n");
+        }
+        else {
+            CardDTO dto = new CardDTO();
+            dto.setCardNumber(AppConfig.currentCard.getCardNumber());
+            dto.setBalance(ConsoleReader.readBalance());
+            cardService.putMoney(dto.getCardNumber(), dto.getBalance());
+        }
     }
 }

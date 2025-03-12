@@ -13,21 +13,22 @@ public interface CardRepository {
     void save(Card card);
 
     /**
-     * Finds card  with same id in file
-     * @param id
-     * @return
-     */
-    Optional<Card> findById(Long id);
-
-    /**
      * Deletes card with same id in file
-     * @param id
+     * @param cardNumber
      */
-    void deleteById(Long id);
+    void deleteByCardNumber(String cardNumber);
 
     /**
      * Return all cards in buffer hashmap
      * @return
      */
     Map<Long, Card> getAllCards();
+
+    /**
+     * Finds card by a number
+     * @param cardNumber - card number for searching
+     * @return card in file
+     */
+    Optional<Card> findByCardNumber(String cardNumber);
+
 }
