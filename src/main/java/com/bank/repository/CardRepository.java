@@ -30,5 +30,4 @@ public interface CardRepository {
      * @return card in file
      */
     Optional<Card> findByCardNumber(String cardNumber);
-
 }

@@ -1,6 +1,5 @@
 package com.bank.repository.impl;
 
-import com.bank.config.AppConfig;
 import com.bank.model.Card;
 import com.bank.repository.CardRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
