@@ -42,11 +42,6 @@ public class ConsoleReader {
         cardDto.setCardNumber(readCardNumber());
         return cardDto;
     }
-    public static CardDTO readValueFromCardBalance(){
-        CardDTO cardDto = readValueFromCardNumber();
-        cardDto.setBalance(readBalance());
-        return cardDto;
-    }
 
     public static String readCardNumber() {
         while (true) {

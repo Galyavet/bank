@@ -8,19 +8,18 @@ import java.util.Optional;
 public interface CardRepository {
     /**
      * Saves object card in file
-     * @param card
+     * @param card - saves in file
      */
     void save(Card card);
 
     /**
      * Deletes card with same id in file
-     * @param cardNumber
+     * @param cardNumber - deletes from file
      */
     void deleteByCardNumber(String cardNumber);
 
     /**
-     * Return all cards in buffer hashmap
-     * @return
+     * @return all cards in buffer hashmap
      */
     Map<Long, Card> getAllCards();
 

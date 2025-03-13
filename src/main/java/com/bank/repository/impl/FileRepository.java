@@ -37,8 +37,12 @@ public class FileRepository implements CardRepository {
                 .filter(entry -> entry.getValue().getCardNumber().equals(cardNumber))
                 .map(Map.Entry::getKey)
                 .findFirst();
-        cards.remove(cardIdOptional.get());
-        saveCards();
+        if(cardIdOptional.isPresent()) {
+            cards.remove(cardIdOptional.get());
+            saveCards();
+        }
+        else
+            System.out.println("Карта не найдена!");
     }
 
     @Override
