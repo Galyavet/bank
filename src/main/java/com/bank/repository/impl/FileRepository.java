@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.bank.config.AppConfig.filepath;
 
 public class FileRepository implements CardRepository {
 
@@ -19,7 +18,10 @@ public class FileRepository implements CardRepository {
 
     private final ObjectMapper objectMapper;
 
-    public FileRepository() {
+    private  final String filePath;
+
+    public FileRepository(String filePath) {
+        this.filePath = filePath;
         cards = new HashMap<>();
         objectMapper = new ObjectMapper();
         loadCards();
@@ -37,11 +39,10 @@ public class FileRepository implements CardRepository {
                 .filter(entry -> entry.getValue().getCardNumber().equals(cardNumber))
                 .map(Map.Entry::getKey)
                 .findFirst();
-        if(cardIdOptional.isPresent()) {
+        if (cardIdOptional.isPresent()) {
             cards.remove(cardIdOptional.get());
             saveCards();
-        }
-        else
+        } else
             System.out.println("Карта не найдена!");
     }
 
@@ -59,7 +60,7 @@ public class FileRepository implements CardRepository {
 
     private void saveCards() {
         try {
-            File file = new File(filepath);
+            File file = new File(filePath);
 
             File parentDir = file.getParentFile();
             if (parentDir != null && !parentDir.exists()) {
@@ -73,7 +74,7 @@ public class FileRepository implements CardRepository {
     }
 
     private void loadCards() {
-        File file = new File(filepath);
+        File file = new File(filePath);
         if (!file.exists()) {
             System.out.println("Файл не найден. Создаем новое хранилище.");
             return;

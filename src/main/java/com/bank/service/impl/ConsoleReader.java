@@ -1,17 +1,22 @@
 package com.bank.service.impl;
 
 import com.bank.commands.Operation;
-import com.bank.config.AppConfig;
 import com.bank.dto.CardDTO;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class ConsoleReader {
-    private static final Scanner scanner = new Scanner(System.in);
 
-    public ConsoleReader() {
+    private final Scanner scanner;
+    private final CurrentCardService currentCardService;
 
+    public ConsoleReader(CurrentCardService currentCardService) {
+        this.scanner = new Scanner(System.in);
+        this.currentCardService = currentCardService;
     }
+
 
     public int readInput() {
         int commandIndex = 0;
@@ -33,17 +38,17 @@ public class ConsoleReader {
         }
     }
 
-    public static CardDTO readValueFromCreateNewCard() {
-        return new CardDTO( readCardNumber(), readPinCode(), readBalance());
+    public CardDTO readValueFromCreateNewCard() {
+        return new CardDTO(readCardNumber(), readPinCode(), readBalance());
     }
 
-    public static CardDTO readValueFromCardNumber() {
+    public CardDTO readValueFromCardNumber() {
         CardDTO cardDto = new CardDTO();
         cardDto.setCardNumber(readCardNumber());
         return cardDto;
     }
 
-    public static String readCardNumber() {
+    public String readCardNumber() {
         while (true) {
             System.out.println("Введите номер карты: ");
             String cardNumber = scanner.nextLine();
@@ -56,7 +61,7 @@ public class ConsoleReader {
 
     }
 
-    public static int readPinCode() {
+    public int readPinCode() {
         while (true) {
             try {
                 System.out.println("Введите пин-код: ");
@@ -73,7 +78,7 @@ public class ConsoleReader {
         }
     }
 
-    public static double readBalance() {
+    public double readBalance() {
         while (true) {
             try {
                 System.out.println("Введите баланс: ");
@@ -89,19 +94,20 @@ public class ConsoleReader {
             }
         }
     }
-    public static boolean verifyPinCode(){
+
+    public boolean verifyPinCode() {
         for (int i = 0; i < 3; i++) {
             try {
                 System.out.println("Введите пин-код: ");
                 String input = scanner.nextLine();
-                if(Integer.parseInt(input) == AppConfig.currentCard.getPinCode()){
+                int enteredPinCode = Integer.parseInt(input);
+                if (enteredPinCode == currentCardService.getCurrentCard().getPinCode()) {
                     return true;
                 }
                 System.out.println("Осталось попыток: " + (2 - i));
             } catch (NumberFormatException e) {
                 System.out.println("Введите корректное число для пин-кода.");
             }
-
         }
         return false;
     }

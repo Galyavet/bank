@@ -1,10 +1,12 @@
 package com.bank.repository;
 
 import com.bank.model.Card;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 import java.util.Optional;
 
+@Repository
 public interface CardRepository {
     /**
      * Saves object card in file

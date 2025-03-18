@@ -1,28 +1,41 @@
 package com.bank.commands.impl;
 
 import com.bank.commands.Command;
-import com.bank.config.AppConfig;
+import com.bank.commands.Operation;
 import com.bank.dto.CardDTO;
+import com.bank.model.Card;
 import com.bank.service.CardService;
 import com.bank.service.impl.ConsoleReader;
+import com.bank.service.impl.CurrentCardService;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GetMoneyCommand implements Command {
     private final CardService cardService;
+    private final CurrentCardService currentCardService;
+    private final ConsoleReader consoleReader;
 
-    public GetMoneyCommand(CardService cardService) {
+    public GetMoneyCommand(CardService cardService, CurrentCardService currentCardService, ConsoleReader consoleReader) {
         this.cardService = cardService;
+        this.currentCardService = currentCardService;
+        this.consoleReader = consoleReader;
     }
 
     @Override
     public void execute() {
-        if (AppConfig.currentCard == null) {
+        Card currentCard = currentCardService.getCurrentCard();
+        if (currentCard == null) {
             System.out.println("Вставьте карту!");
-        }
-        else {
+        } else {
             CardDTO dto = new CardDTO();
-            dto.setCardNumber(AppConfig.currentCard.getCardNumber());
-            dto.setBalance(ConsoleReader.readBalance());
+            dto.setCardNumber(currentCard.getCardNumber());
+            dto.setBalance(consoleReader.readBalance());
             cardService.getMoney(dto.getCardNumber(), dto.getBalance());
         }
+    }
+
+    @Override
+    public Operation getOperation() {
+        return Operation.GET_MONEY;
     }
 }
