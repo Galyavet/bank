@@ -1,9 +1,11 @@
 package com.bank.service;
 
 import com.bank.model.Card;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public interface CardService {
     /**
      * Create card

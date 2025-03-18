@@ -1,16 +1,15 @@
 package com.bank;
 
-import com.bank.config.AppConfig;
-import com.bank.controller.ConsoleController;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 
-
+@SpringBootApplication
 public class Main {
-    public static void main(String[] args) throws IOException {
-        AppConfig.init();
-        ConsoleController consoleController = AppConfig.getConsoleController();
-        consoleController.start();
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+
     }
 
 }
